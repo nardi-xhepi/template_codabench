@@ -41,14 +41,14 @@ leaderboards:
   - title: Results
     key: main
     columns:
-      - title: Test Accuracy
+      - title: Test Spearman Correlation
         key: test
         index: 0
-        sorting: asc
-      - title: Private Test Accuracy
+        sorting: desc
+      - title: Private Test Spearman
         key: private_test
         index: 1
-        sorting: asc
+        sorting: desc
         hidden: True
       - title: Train time
         key: train_time
