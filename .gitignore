@@ -1,0 +1,42 @@
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Raw downloaded data (large files - keep only two_vs_many.csv)
+data/*.csv
+data/*.zip
+data/splits/*.fasta
+data/splits/.DS_Store
+# Keep two_vs_many.csv for CI
+!data/splits/two_vs_many.csv
+
+# Generated outputs (from local testing)
+output/
+results/
+ingestion_res/
+scoring_res/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Misc
+*.log
