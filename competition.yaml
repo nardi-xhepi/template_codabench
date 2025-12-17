@@ -16,7 +16,7 @@ pages:
 tasks:
   - index: 0
     name: Developement Task
-    description: 'Tune models with training data, test against examples contained in public test data'
+    description: 'Train on low-mutation variants (1-2), test on high-mutation variants (3+)'
     input_data: dev_phase/input_data/
     reference_data: dev_phase/reference_data/
     ingestion_program: ingestion_program/
