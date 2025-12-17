@@ -1,6 +1,6 @@
 version: 2
-title: Templat competition - Dummy classification
-description: Dummy classification task
+title: FLIP AAV Capsid Optimization Challenge
+description: Predict protein fitness from amino acid sequences
 image: logo.png
 registration_auto_approve: False  # if True, do not require approval from admin to join the comp
 
