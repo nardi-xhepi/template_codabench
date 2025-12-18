@@ -6,7 +6,7 @@ import pandas as pd
 EVAL_SETS = ["test", "private_test"]
 
 
-def compute_accuracy(predictions, targets):
+def compute_score(predictions, targets):
     # Make sure there is no NaN, as pandas ignores them in mean computation
     predictions = predictions.fillna(-10).values
     # Return mean of correct predictions
@@ -25,7 +25,7 @@ def main(reference_dir, prediction_dir, output_dir):
             reference_dir / f'{eval_set}_labels.csv'
         )
 
-        scores[eval_set] = float(compute_accuracy(predictions, targets))
+        scores[eval_set] = float(compute_score(predictions, targets))
 
     # Add train and test times in the score
     json_durations = (prediction_dir / 'metadata.json').read_text()
