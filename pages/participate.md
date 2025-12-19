@@ -22,3 +22,19 @@ def get_model():
 Your model must implement:
 - `fit(X, y)`: Train on sequences and fitness values
 - `predict(X)`: Return predictions
+
+## The Twist: Epistasis
+
+You'll train on variants with 1-2 mutations but test on variants with 3+ mutations. Mutations are not additive: they interact!
+
+## Evaluation Metric: Spearman's Rank Correlation (ρ)
+
+In protein engineering, **ranking matters more than absolute values**.
+
+| Score | Meaning |
+|-------|---------|
+| ρ = 1.0 | Perfect ranking |
+| ρ = 0.5 | Moderate correlation |
+| ρ = 0.0 | Random ranking |
+
+Your final score is the Spearman correlation on the test set. Higher ρ = higher leaderboard position.
