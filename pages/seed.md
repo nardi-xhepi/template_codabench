@@ -1,21 +1,34 @@
-# Seed:
+# Seed Model
 
+Your submission should be a Python file named `submission.py` that contains a `get_model()` function:
+
+```python
+def get_model():
+    """Return a model for the FLIP AAV fitness prediction challenge."""
+    return YourModel()
 ```
-class Model:
-    def fit(self, X_train, y_train):
-        """
-        This should handle the logic of training your model
-        :param X_train: np.array of training data
-        :param y_train: np.array of the same length as X_train. Contains classifications of X_train
-        """
-        pass
 
-    def predict(self, X_test):
-        """
-        This should handle making predictions with a trained model
-        :param X_test: np.array of testing data
-        :return: np.array of the same length as X_test containing predictions to each point in X_test
-        """
-        pass
+## Example Baseline
 
+```python
+from sklearn.base import BaseEstimator, RegressorMixin
+from sklearn.linear_model import Ridge
+
+class SimpleBaseline(BaseEstimator, RegressorMixin):
+    def __init__(self):
+        self.model = Ridge()
+    
+    def fit(self, X, y):
+        features = X['sequence'].apply(len).values.reshape(-1, 1)
+        self.model.fit(features, y)
+        return self
+    
+    def predict(self, X):
+        features = X['sequence'].apply(len).values.reshape(-1, 1)
+        return self.model.predict(features)
+
+def get_model():
+    return SimpleBaseline()
 ```
+
+Better approaches: K-mer features, ESM-2 embeddings, CNNs, Transformers
