@@ -35,6 +35,10 @@ class SequenceFitnessRegressor(BaseEstimator, RegressorMixin):
         X_feat = np.array([self._seq_to_features(s) for s in sequences])
         X_scaled = self.scaler.fit_transform(X_feat)
         # BUG: y might be DataFrame, sklearn expects array!
+        # Handle DataFrame y
+        import pandas as pd
+        if isinstance(y, pd.DataFrame):
+            y = y.values.ravel()
         self.model.fit(X_scaled, y)
         return self
     
