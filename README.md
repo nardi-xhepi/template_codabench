@@ -134,3 +134,5 @@ docker run --rm -u root \
 This repo defines a CI for the bundle, which build a docker image from the `tools/Dockerfile`,
 and try to run `tools/setup_data.py` and then the ingestion/scoring programs.
 
+### Creators of the challenge and opinion on our own challenge.
+Creators: Alizée Mesnard, Cécile Luc, Hamza Boukhriss, Laurian Truong, Nardi Xhepi, Nicolas Bieszczad
