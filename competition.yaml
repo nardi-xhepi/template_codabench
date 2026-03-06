@@ -2,7 +2,7 @@ version: 2
 title: FLIP AAV Capsid Optimization Challenge
 description: Predict protein fitness from amino acid sequences
 image: logo.png
-registration_auto_approve: False  # if True, do not require approval from admin to join the comp
+registration_auto_approve: True  # if True, do not require approval from admin to join the comp
 
 terms: pages/terms.md
 pages:
@@ -32,8 +32,8 @@ solutions:
 phases:
   - name: Development Phase
     description: 'Development phase: tune your models.'
-    start: 10-07-2025
-    end: 03-31-2026
+    start: 08-03-2026
+    end: 07-03-2032
     tasks:
       - 0
 
