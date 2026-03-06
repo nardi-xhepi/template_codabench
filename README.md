@@ -11,7 +11,7 @@ The key difficulty is **epistasis**: the model is trained on variants with 1–2
 
 ## Background
 
-The data comes from the [FLIP](https://github.com/J-SNACKKB/FLIP) (Fitness Landscape Inference for Proteins) benchmark, specifically the **AAV** dataset. It was generated through a deep mutational scanning (DMS) experiment measuring the packaging fitness of ~280,000 variants of the AAV2 capsid protein VP1 ([Bryant et al., 2021](https://www.nature.com/articles/s41587-021-00922-7)).
+The data comes from the [FLIP](https://datasets-benchmarks-proceedings.neurips.cc/paper/2021/file/2b44928ae11fb9384c4cf38708677c48-Paper-round2.pdf) (Fitness Landscape Inference for Proteins) benchmark, specifically the **AAV** dataset. It was generated through a deep mutational scanning (DMS) experiment measuring the packaging fitness of ~280,000 variants of the AAV2 capsid protein VP1.
 
 AAV vectors are the leading platform for **gene therapy**. Engineering better capsids is crucial for improving tissue targeting, evading immune responses, and increasing packaging efficiency for larger therapeutic genes.
 

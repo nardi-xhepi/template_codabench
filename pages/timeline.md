@@ -8,4 +8,4 @@ set of testing data
 Resubmit your preferred submission from the development phase to test
 against a new set of testing data. Your model will be trained against
 the same set of training data as in the development phase. You may only
-make one submission to this phase, so choose wisely.
+make a few submissions to this phase, so choose wisely.
