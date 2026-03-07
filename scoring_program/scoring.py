@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 from scipy.stats import spearmanr
 
@@ -23,6 +24,27 @@ def compute_spearman(predictions, targets):
     return 0.0 if pd.isna(corr) else corr
 
 
+def compute_top_k_precision(predictions, targets, k=100):
+    """Compute Precision@k: fraction of true top-k variants in predicted top-k."""
+    y_pred = predictions.values.flatten()
+    y_true = targets.values.flatten()
+
+    mask = ~(pd.isna(y_pred) | pd.isna(y_true))
+    y_pred = y_pred[mask]
+    y_true = y_true[mask]
+
+    if len(y_pred) < k:
+        print(f"Warning: Only {len(y_pred)} samples available, but k={k} requested")
+        k = len(y_pred)
+
+    top_k_pred_indices = set(np.argsort(y_pred)[-k:])
+    top_k_true_indices = set(np.argsort(y_true)[-k:])
+
+    overlap = len(top_k_pred_indices & top_k_true_indices)
+
+    return float(overlap / k)
+
+
 def main(reference_dir, prediction_dir, output_dir):
     scores = {}
     for eval_set in EVAL_SETS:
@@ -30,6 +52,7 @@ def main(reference_dir, prediction_dir, output_dir):
         predictions = pd.read_csv(prediction_dir / f'{eval_set}_predictions.csv')
         targets = pd.read_csv(reference_dir / f'{eval_set}_labels.csv')
         scores[eval_set] = float(compute_spearman(predictions, targets))
+        scores[f'{eval_set}_precision100'] = float(compute_top_k_precision(predictions, targets, k=100))
 
     json_durations = (prediction_dir / 'metadata.json').read_text()
     durations = json.loads(json_durations)
