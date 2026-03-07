@@ -8,9 +8,11 @@ Creators: Alizée Mesnard, Cécile Luc, Hamza Boukhriss, Laurian Truong, Nardi X
 
 ---
 
-## The Vision: Real challenges have real impact !
+## Real challenges have real impact !
 
-This competition bridges the gap between **academic ML** and **real-world protein engineering**. Instead of toy datasets, you'll work with actual experimental data from AAV gene therapy research — the same data scientists use to design treatments for genetic diseases.
+This competition bridges the gap between **academic ML** and **real-world protein engineering**. Instead of toy datasets, you'll work with actual experimental data from AAV gene therapy research, the same data scientists use to design treatments for genetic diseases.
+
+In concrete terms, your goal is to build a machine learning regression model that predicts how well a modified virus functions. You will be provided with datasets where the input is a sequence of amino acids (a long text string representing the protein) and the target is its experimental "fitness" score (a numerical float). The catch is that you will train your model on slightly modified proteins (those with only 1 or 2 mutations), but you must predict the fitness of heavily mutated ones with 3 or more mutations!
 
 What makes this challenge unique?
 
@@ -22,13 +24,17 @@ What makes this challenge unique?
 
 ## The Scientific Context
 
-This challenge uses the **AAV dataset** from the [FLIP benchmark](https://datasets-benchmarks-proceedings.neurips.cc/paper/2021/file/2b44928ae11fb9384c4cf38708677c48-Paper-round2.pdf) (Fitness Landscape Inference for Proteins) — but with a pedagogical twist, with additionnal features.
+This challenge uses the **AAV dataset** from the [FLIP benchmark](https://datasets-benchmarks-proceedings.neurips.cc/paper/2021/file/2b44928ae11fb9384c4cf38708677c48-Paper-round2.pdf) (Fitness Landscape Inference for Proteins) — BUT with a pedagogical twist, with additionnal features.
 
 ### The Data
 
 Generated through **deep mutational scanning (DMS)** experiments measuring the packaging fitness of ~280,000 variants of the AAV2 capsid protein VP1 (~735 amino acids each).
 
-### The Application: Gene Therapy
+In this challenge, the data is provided as standard CSV files:
+- **Features (`train_features.csv`, `test_features.csv`, `private_test_features.csv`)**: A `sequence` column containing the full amino acid chain (a string of ~735 characters) for each variant.
+- **Labels (`train_labels.csv`)**: A `target` column containing the fitness score (a log-enrichment ratio). A higher score indicates a highly functional virus that successfully assembled and packaged its DNA, while a lower score means the mutations broke the viral structure.
+
+### The Application : How is this challenge useful? -> Gene Therapy
 
 **Adeno-Associated Viruses (AAV)** are the workhorse of modern gene therapy, delivering therapeutic genes to treat:
 - Spinal muscular atrophy (Zolgensma — $2.1M treatment)
@@ -43,10 +49,12 @@ Engineering better AAV capsids is crucial for:
 
 ### The Challenge: Epistasis
 
-The core difficulty is **epistasis** — when mutations interact non-additively:
-- Train on variants with **1–2 mutations** (easy to test experimentally)
-- Predict on variants with **3+ mutations** (exponentially expensive to test)
-- Linear models fail catastrophically — you must capture **combinatorial interactions**
+The core difficulty is **epistasis** — when mutations interact non-additively.
+
+Because of this non-linear landscape, the challenge is set up as an extrapolation problem:
+- You will train on variants with **1–2 mutations** (which are cheap and easy to test experimentally).
+- You must predict the fitness of variants with **3+ mutations** (which are exponentially expensive to explore in a lab).
+- Simple linear models usually fail catastrophically here. You must capture **combinatorial interactions**.
 
 This mirrors the **real experimental bottleneck** in protein engineering labs worldwide.
 
@@ -77,10 +85,15 @@ The distribution shift (1-2 mutations → 3+ mutations) is **the core challenge*
 
 The original FLIP benchmark is a research tool used in top-tier ML/biology papers. We adapted it for education by:
 
-1. **Scaffolded Baselines**
-   - **Level 1**: Simple Ridge regression with k-mer features (ρ ≈ 0.42)
-   - **Level 2**: Added 4 biophysical features (net charge, hydrophobicity, amphipathicity, stability) — pedagogically chosen to teach domain knowledge integration
-   - **Level 3**: (For participants to explore) Protein language models (ESM-2, ProtBERT), gradient boosting, or neural networks
+1. **Scaffolded Baselines (See `solution/submission.py`)**
+   Machine learning algorithms cannot read raw strings; sequences must be translated into numerical representations. We provide a starting codebase with progressive difficulty:
+   - **Level 1 (The active baseline)**: A simple Ridge regression model. It translates the string into numbers by computing the amino acid composition (e.g., frequency of Alanine) and K-mer frequencies (counting 2-letter and 3-letter substrings like "AC" or "ACD"). This yields a ρ ≈ 0.42.
+   - **Level 2 (Your turn to explore)**: We added 4 biophysical features, pedagogically chosen to teach domain knowledge integration. The method to compute those features is in the `submission.py` example file! Using them will teach you how to integrate biological domain knowledge:
+     * *Net Charge*: Influences the capsid's interactions with cellular receptors.
+     * *Average Hydrophobicity*: Drives the core folding of the protein.
+     * *Hydrophobic Moment (Amphipathicity)*: Indicates if secondary structures have distinct hydrophobic/hydrophilic faces.
+     * *Instability Index*: A proxy for how rapidly the protein might degrade.
+   - **Level 3 (Advanced)**: Implement Protein Language Models (ESM-2, ProtBERT), gradient boosting, or neural networks to capture deep epistatic interactions.
 
 2. **Dual Evaluation Metrics**
    - **Spearman ρ**: Standard ML metric, easy to interpret
