@@ -4,3 +4,4 @@ scipy
 numpy
 requests
 matplotlib
+seaborn
