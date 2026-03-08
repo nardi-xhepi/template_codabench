@@ -24,7 +24,8 @@ You are tasked with **predicting the fitness of AAV capsid variants** from their
 
 - **Input:** Amino acid sequence of an AAV capsid protein variant (~735 residues)
 - **Output:** Fitness score (float) — how well the capsid packages viral DNA
-- **Metric:** **Spearman's rank correlation (ρ)** — because in protein engineering, **ranking matters more than exact values**
+- **Primary metric:** **Spearman's rank correlation (ρ)** — because in protein engineering, **ranking matters more than exact values**
+- **Bonus metric:** **Precision@100** — the fraction of the true top-100 variants that appear in your model's predicted top 100. This reflects a real experimental constraint: if you could only test 100 variants in the lab, how many would actually be the best?
 
 Your model will be evaluated on its ability to **rank variants correctly**: which ones are the top performers, and which ones fail?
 
