@@ -31,9 +31,19 @@ solutions:
 
 phases:
   - name: Development Phase
-    description: 'Development phase: tune your models.'
-    start: 08-03-2026
-    end: 07-03-2032
+    description: 'Development phase: tune your models. Only public test scores are visible on the leaderboard. Private test scores are computed but hidden.'
+    start: 2026-03-08
+    end: 2026-05-31
+    max_submissions_per_day: 30
+    max_submissions: 200
+    tasks:
+      - 0
+  - name: Final Phase
+    description: 'Final phase: submit your best model. Private test scores will be revealed for final ranking.'
+    start: 2026-06-01
+    end: 2032-03-07
+    max_submissions_per_day: 3
+    max_submissions: 10
     tasks:
       - 0
 
@@ -45,16 +55,25 @@ leaderboards:
         key: test
         index: 0
         sorting: desc
+      - title: Test Precision@100
+        key: test_precision100
+        index: 1
+        sorting: desc
       - title: Private Test Spearman
         key: private_test
-        index: 1
+        index: 2
+        sorting: desc
+        hidden: True
+      - title: Private Test Precision@100
+        key: private_test_precision100
+        index: 3
         sorting: desc
         hidden: True
       - title: Train time
         key: train_time
-        index: 2
-        sorting: desc
+        index: 4
+        sorting: asc
       - title: Test time
         key: test_time
-        index: 3
-        sorting: desc
+        index: 5
+        sorting: asc
